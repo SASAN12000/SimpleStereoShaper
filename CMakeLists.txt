@@ -1,16 +1,20 @@
+
 cmake_minimum_required(VERSION 3.22)
+
 project(SimpleStereoShaper VERSION 1.0.0)
 
-# Set JUCE_DIR to your JUCE source folder when configuring, or add JUCE as a subdirectory.
+# Find JUCE
 find_package(JUCE CONFIG QUIET)
+
 if(NOT JUCE_FOUND)
     message(FATAL_ERROR "JUCE was not found. Install JUCE 8 and set JUCE_DIR to its cmake folder.")
 endif()
 
+# Create plugin
 juce_add_plugin(SimpleStereoShaper
-    COMPANY_NAME "OpenAI"
-    BUNDLE_ID "com.openai.simplestereoshaper"
-    PLUGIN_MANUFACTURER_CODE OAI1
+    COMPANY_NAME "SASAN12000"
+    BUNDLE_ID "com.sasan12000.simplestereoshaper"
+    PLUGIN_MANUFACTURER_CODE SASN
     PLUGIN_CODE StSh
     FORMATS VST3 Standalone
     PRODUCT_NAME "Simple Stereo Shaper"
@@ -22,14 +26,21 @@ juce_add_plugin(SimpleStereoShaper
     COPY_PLUGIN_AFTER_BUILD FALSE
 )
 
+# Generate JUCE header
 juce_generate_juce_header(SimpleStereoShaper)
+
+# Source files
 target_sources(SimpleStereoShaper PRIVATE
     Source/PluginProcessor.cpp
     Source/PluginProcessor.h
     Source/PluginEditor.cpp
     Source/PluginEditor.h
 )
+
+# C++ standard
 target_compile_features(SimpleStereoShaper PRIVATE cxx_std_17)
+
+# Link JUCE modules
 target_link_libraries(SimpleStereoShaper PRIVATE
     juce::juce_audio_utils
     juce::juce_dsp
